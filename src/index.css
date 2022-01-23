@@ -1,0 +1,250 @@
+* {
+  box-sizing: border-box;
+  touch-action: manipulation;
+}
+
+html,
+body {
+  height: -webkit-fill-available;
+  min-height: 100%;
+}
+
+body {
+  overflow: hidden;
+  user-select: none;
+  background: #121212;
+  color: #fff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+:root {
+  --unsubmitted-color: rgba(255, 255, 255, 0.08);
+  --correct-color: #4caf50;
+  --somewhere-color: #ff9800;
+  --incorrect-color: rgba(255, 255, 255, 0.16);
+}
+
+svg {
+  display: block;
+  width: 24px;
+}
+
+.app {
+  min-width: 375px;
+  max-width: 428px;
+  max-height: 740px;
+  height: -webkit-fill-available;
+  width: 100vw;
+  font-family: '-apple-system', 'Helvetica Neue', 'Helvetica', 'Arial',
+    sans-serif;
+  margin: 0 auto;
+  padding: 0 1rem calc(env(safe-area-inset-bottom) + 0.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+header {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.5rem;
+}
+
+.help {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.help p {
+  width: 300px;
+  background: #282828;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.help a {
+  color: var(--correct-color);
+}
+
+.help--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.guesses {
+  aspect-ratio: 5 / 6;
+  flex: 1;
+  align-self: center;
+  max-width: 100%;
+  display: grid;
+  grid-template: repeat(6, 1fr) / repeat(5, 1fr);
+  grid-gap: 0.5rem;
+  min-width: 0;
+}
+
+#guess-input {
+  position: absolute;
+  left: -100000px;
+  font-size: 16px;
+}
+
+.letter {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.submitted {
+  animation: flip 0.5s ease-in-out forwards;
+}
+
+@keyframes flip {
+  50% {
+    transform: rotateX(-90deg);
+    background: var(--unsubmitted-color);
+  }
+
+  50.001% {
+    background: var(--color);
+  }
+
+  100% {
+    background: var(--color);
+  }
+}
+
+.letter:nth-child(5n + 1) {
+  animation-delay: 0s;
+}
+.letter:nth-child(5n + 2) {
+  animation-delay: 0.1s;
+}
+.letter:nth-child(5n + 3) {
+  animation-delay: 0.2s;
+}
+.letter:nth-child(5n + 4) {
+  animation-delay: 0.3s;
+}
+.letter:nth-child(5n + 5) {
+  animation-delay: 0.4s;
+}
+
+.letter:not(.submitted):not(:empty) {
+  animation: pop 0.2s ease-out;
+}
+
+@keyframes pop {
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.letter.active:after {
+  content: '';
+  display: block;
+  width: 30%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  bottom: calc(50% - 0.8rem);
+  animation: blink 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes blink {
+  to {
+    opacity: 0;
+  }
+}
+
+.message {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 5px 5px -3px,
+    rgb(0 0 0 / 14%) 0px 8px 10px 1px, rgb(0 0 0 / 12%) 0px 3px 14px 2px;
+  text-align: center;
+  height: 2.4rem;
+  line-height: 2.4rem;
+  width: 80%;
+  margin: 1rem auto;
+  opacity: 1;
+  will-change: opacity;
+  transition: opacity 0.3s ease-in-out;
+  flex-shrink: 0;
+}
+
+.message:empty {
+  opacity: 0;
+}
+
+.keyboard {
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(11, minmax(0, 1fr));
+  grid-gap: 0.3rem;
+  justify-content: center;
+}
+
+.key {
+  background: var(--color, rgba(255, 255, 255, 0.5));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-size: 1rem;
+  border: none;
+  color: #fff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.8);
+  will-change: transform;
+  transition: all 0.15s ease-in-out;
+  text-transform: uppercase;
+}
+
+.key:active {
+  transform: scale(0.95) translateY(2px);
+}
+
+.key[data-key='⌫'] {
+  grid-column: span 2;
+  width: 75%;
+}
+
+.key[data-key='⏎'] {
+  background: #0288d1;
+  grid-column: span 2 / -1;
+  width: 75%;
+  justify-self: end;
+}
+
+.🟩 {
+  --color: #4caf50;
+}
+
+.🟨 {
+  --color: #ff9800;
+}
+
+.⬛ {
+  --color: rgba(255, 255, 255, 0.16);
+}
