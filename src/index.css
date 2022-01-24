@@ -32,7 +32,7 @@ svg {
 }
 
 .app {
-  min-width: 375px;
+  min-width: 320px;
   max-width: 428px;
   max-height: 740px;
   height: -webkit-fill-available;
@@ -186,7 +186,7 @@ header {
   text-align: center;
   height: 2.4rem;
   line-height: 2.4rem;
-  width: 80%;
+  width: 85%;
   margin: 1rem auto;
   opacity: 1;
   will-change: opacity;
