@@ -216,7 +216,7 @@ function Keyboard({ onInput, onSubmit, guesses, isDone, matrix }) {
     .reduce((acc, { guess, states = [] }) => {
       states.forEach((state, index) => {
         const letter = guess?.[index];
-        if (state === '🟩') acc[letter] = '🟩';
+        if (state === '🟩' || acc[letter] === '🟩') acc[letter] = '🟩';
         else if (state === '🟨' && acc[letter] !== '🟩') acc[letter] = '🟨';
         else if (state === '⬛' && acc[letter] !== '🟨') acc[letter] = '⬛';
       });
