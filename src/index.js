@@ -80,7 +80,7 @@ export default function Game() {
       guesses[guesses.length - 2] === answer
         ? 'Bra jobbat! Klicka för att dela 📋'
         : guesses.length === MAX_GUESSES + 1
-        ? 'Bättre lycka imorn!'
+        ? 'Bättre lycka imorn! Klicka för att dela 📋'
         : ''
     );
   }, [answer, guesses]);
@@ -112,20 +112,18 @@ export default function Game() {
   });
 
   const onMessageClick = () => {
-    if (isCorrect) {
-      setMessage('Kopierat och redo att dela! 📋');
+    setMessage('Kopierat och redo att dela! 📋');
 
-      const clipboardMessage = `Swordle ${answerIndex} ${
-        guesses.length - 1
-      }/${MAX_GUESSES}
+    const clipboardMessage = `Swordle ${answerIndex} ${
+      guesses.length - 1
+    }/${MAX_GUESSES}
 
 ${matrix
   .slice(0, guesses.length - 1)
   .map(({ states }) => states.join(''))
   .join('\n')}\n\nhttps://swordle.vercel.app`;
 
-      navigator.clipboard.writeText(clipboardMessage);
-    }
+    navigator.clipboard.writeText(clipboardMessage);
   };
 
   return (
