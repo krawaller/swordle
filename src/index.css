@@ -3,6 +3,12 @@
   touch-action: manipulation;
 }
 
+@media screen and (max-width: 374px) {
+  html {
+    font-size: 13px;
+  }
+}
+
 body {
   position: fixed;
   width: 100%;
